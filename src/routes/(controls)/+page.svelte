@@ -4,6 +4,8 @@
 	import Checkbox from '$lib/components/controls/Checkbox.svelte';
 	import ItemInput from '$lib/components/controls/ItemInput.svelte';
 	import Player from '$lib/components/controls/Player.svelte';
+	import RangeInput from '$lib/components/controls/RangeInput.svelte';
+	import { getFiltersStyle } from '$lib/filters.svelte';
 	import { settings, overlay, items, type Settings, defaultStages } from '$lib/storage.svelte';
 
 	const fonts: Settings['font'][] = ['sans-serif', 'courier-prime'];
@@ -14,10 +16,15 @@
 <!-- items -->
 <Accordion title="items">
 	<ItemInput placeholder="add name" item="names" />
+	{#if settings.current.enableAvatars}
+		<ItemInput placeholder="add avatar URL" item="avatarURLs" />
+	{/if}
 	{#if settings.current.enableTags}
 		<ItemInput placeholder="add tag" item="tags" />
 	{/if}
-	<ItemInput placeholder="add flag" item="flags" />
+	{#if settings.current.enableFlags}
+		<ItemInput placeholder="add flag" item="flags" />
+	{/if}
 	<ItemInput placeholder="add map" item="maps" />
 	<ItemInput placeholder="add stage" item="stages" />
 </Accordion>
@@ -39,13 +46,23 @@
 		{/each}
 	</div>
 
+	<!-- color -->
+	<div class="flex gap-2">
+		<div
+			class="size-12 border-4 border-ctp-text bg-ctp-lavender"
+			style:filter={getFiltersStyle()}
+		></div>
+		<div class="flex flex-col justify-evenly">
+			<RangeInput setting="hue" max={360} />
+			<RangeInput setting="saturation" max={200} />
+		</div>
+	</div>
+
 	<Checkbox desc="show POV guide" setting="enablePOVGuide" />
-	<Checkbox desc="use team colors" setting="enableTeamColors" />
 	<Checkbox desc="use single POV" setting="enableSinglePOV" />
+	<Checkbox desc="use team colors" setting="enableTeamColors" />
 	<Checkbox desc="use player PRs" setting="enablePRs" />
 	<Checkbox desc="use player tags" setting="enableTags" />
-	<!-- todo -->
-	{settings.current.color}
 </Accordion>
 
 <!-- overlay -->

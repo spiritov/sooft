@@ -2,9 +2,12 @@ import { PersistentState } from '@friendofsvelte/state';
 
 export type Settings = {
 	font: 'sans-serif' | 'courier-prime';
-	color: string;
+	hue: number;
+	saturation: number;
 	enablePRs: boolean;
+	enableAvatars: boolean;
 	enableTags: boolean;
+	enableFlags: boolean;
 	enableTeamColors: boolean;
 	enableSinglePOV: boolean;
 	enablePOVGuide: boolean;
@@ -12,6 +15,7 @@ export type Settings = {
 
 export type Player = {
 	name: string;
+	avatarURL: string;
 	tag: string;
 	flag: string;
 	score: number;
@@ -28,6 +32,7 @@ export type Overlay = {
 
 export type Items = {
 	names: Array<string>;
+	avatarURLs: Array<string>;
 	tags: Array<string>;
 	flags: Array<string>;
 	maps: Array<string>;
@@ -49,9 +54,12 @@ export const defaultStages = [
 // overlay settings
 export const settings = new PersistentState('settings', {
 	font: 'sans-serif',
-	color: '#000000',
+	hue: 0,
+	saturation: 100,
 	enablePRs: false,
+	enableAvatars: false,
 	enableTags: false,
+	enableFlags: true,
 	enableTeamColors: false,
 	enableSinglePOV: false,
 	enablePOVGuide: false
@@ -60,8 +68,8 @@ export const settings = new PersistentState('settings', {
 // overlay state
 export const overlay = new PersistentState('overlay', {
 	bestOf: 3,
-	leftPlayer: { name: '', tag: '', flag: '', score: 0, pr: '' },
-	rightPlayer: { name: '', tag: '', flag: '', score: 0, pr: '' },
+	leftPlayer: { name: '', avatarURL: '', tag: '', flag: '', score: 0, pr: '' },
+	rightPlayer: { name: '', avatarURL: '', tag: '', flag: '', score: 0, pr: '' },
 	map: '',
 	stage: ''
 } as Overlay);
@@ -69,6 +77,7 @@ export const overlay = new PersistentState('overlay', {
 // overlay items
 export const items = new PersistentState('items', {
 	names: [],
+	avatarURLs: [],
 	tags: [],
 	flags: [],
 	maps: [],
