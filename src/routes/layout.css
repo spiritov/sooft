@@ -44,7 +44,7 @@
 
 @layer base {
 	:root {
-		@apply bg-obs-background font-comic-relief text-ctp-text selection:bg-ctp-lavender/50;
+		@apply font-comic-relief text-ctp-text selection:bg-ctp-lavender/50;
 	}
 
 	body {
